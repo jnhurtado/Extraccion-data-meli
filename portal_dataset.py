@@ -497,7 +497,8 @@ regiones_de_chile = {
 
 regiones = ["metropolitana"]
 
-comunas_prueba = ["vitacura-metropolitana", "las-condes-metropolitana", "providencia-metropolitana", "lo-barnechea-metropolitana"]
+#comunas_prueba = ["vitacura-metropolitana", "las-condes-metropolitana", "providencia-metropolitana", "lo-barnechea-metropolitana"]
+comunas_prueba = ["vitacura-metropolitana", "las-condes-metropolitana","providencia-metropolitana", "lo-barnechea-metropolitana"]
 
 comunas = []
 for region, lugares in regiones_de_chile.items():
@@ -505,7 +506,8 @@ for region, lugares in regiones_de_chile.items():
         for lugar in lugares:
             comunas.append(lugar+"-"+region)
 
-opciones = ["arriendo", "venta"]
+comunas = comunas_prueba
+opciones = [ "arriendo"] #"arriendo",
 
 inmuebles = ["departamento","casa"]
 
@@ -600,6 +602,8 @@ for comuna in comunas:
                     data["Estado"] = estado
                     #data["latitud"] = str((float(lat.split("*")[0]) + float(lat.split("*")[1]))/2)
                     #data["longitud"] = str((float(lon.split("*")[0]) + float(lon.split("*")[1]))/2)
+                    data["Fecha extraccion"] = "{}/{}/{}".format(datetime.now().day, datetime.now().month, datetime.now().year)
+
                     
                     data_antigua = pd.concat([data_antigua,data])
                     
@@ -608,9 +612,8 @@ for comuna in comunas:
          
             
 print("Errores: ",errores)
-data_antigua["Fecha extraccion"] = "{}/{}/{}".format(datetime.now().day, datetime.now().month, datetime.now().year)
 
 data_antigua = data_antigua.dropna(subset=['Comuna'])
 
-data_antigua.replace("ñ","n", regex=True).to_csv("Data_portal_inmobiliario.csv",index=False)
+data_antigua.replace("ñ","n", regex=True).to_csv("Data_portal_inmobiliario_2.csv",index=False)
 
